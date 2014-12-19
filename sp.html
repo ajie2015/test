@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body onLoad="hide_div();">
+<div onmouseover="display_div();">test</div>
+<div id="test""></div>
+<script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+<script>
+if(typeof(EventSource)!=="undefined"){
+	create_source('FG1509');
+	create_source('RB1505');
+	create_source('JD1501');
+	create_source('RM1505');
+	//create_source('SR1509');
+} else {
+	document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";
+}
+
+function create_source( name ){
+	append_div(name);
+	var source = new EventSource("get_sina.php?name=" + name);
+	source.onmessage = function(event){
+		array_name = event.data.split(",");
+		$("#" + name ).html(array_name[8]);
+	};
+}
+
+function hide_div(){
+	$("#test").hide();
+}
+
+function display_div(){
+	$("#test").show();
+}
+
+function append_div( name ){
+	$('<div id="' + name + '" style="color:white"></div>').appendTo($('#test'));
+}
+</script>
+
+</body>
+</html>
