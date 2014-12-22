@@ -9,7 +9,10 @@ if(typeof(EventSource)!=="undefined"){
 	create_source('FG1509');
 	create_source('RB1505');
 	create_source('JD1501');
+	create_source('JD1505');
 	create_source('RM1505');
+	create_source('M1505');
+	create_source('M1509');
 	//create_source('SR1509');
 } else {
 	document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";
@@ -31,7 +34,6 @@ function hide_div(){
 function display_div(){
 	$("#test").show();
 }
-
 function append_div( name ){
 	$('<div id="' + name + '" style="color:white"></div>').appendTo($('#test'));
 }
