@@ -1,7 +1,15 @@
 <?php
-$url = "http://hq.sinajs.cn/list=$_GET[name]";
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
-$text = file_get_contents($url);
-echo "data:$text";
-echo "\n\n"; ?>
+$array_name = explode(',',$_GET['name']);
+$text='';
+foreach ($array_name as $key=>$value){
+	$matches = array();
+	$url[$key] = "http://hq.sinajs.cn/list=$value";
+	$content[$key] = file_get_contents( $url[$key] );
+	$content[$key] = preg_match("/(.*);/", $content[$key], $matches);
+	$text .= $matches[1].',';
+}
+echo "data:{$text}";
+echo "\n\n";
+?>
