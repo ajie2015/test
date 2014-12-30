@@ -7,7 +7,7 @@
 <script>
 if(typeof(EventSource)!=="undefined"){
 
-	var name = 'FG1509,M1509,RM1509,JD1501,SR1509';
+	var name = 'FG1509,M1509,RM1509,SR1509,I1505';
 	var source = new EventSource("get_sina.php?name=" + name);
 	source.onmessage = function(event){
 		
