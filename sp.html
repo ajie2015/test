@@ -10,7 +10,6 @@ if(typeof(EventSource)!=="undefined"){
 	var name = 'FG1509,M1509,RM1509,SR1509,I1505';
 	var source = new EventSource("get_sina.php?name=" + name);
 	source.onmessage = function(event){
-		
 		var content = event.data;
 		array_price = content.split(",");
 		array_name = name.split(",");
@@ -21,12 +20,17 @@ if(typeof(EventSource)!=="undefined"){
 		}
 	};
 } else {
-	document.getElementById("result").innerHTML="浏览器不支持event.";
+	$("#test").html("浏览器不支持event.");
 }
 
 //创建div
 function append_div( name ){
-	$('<div id="' + name + '" style="color:white"></div>').appendTo($('#test'));
+	//if($("'#" + name + "'").html()){
+	var obj = $('#' + name );
+	if(obj.length > 0 ) {
+	} else {
+		$('<div id="' + name + '" style="color:white"></div>').appendTo($('#test'));
+	}
 }
 </script>
 
