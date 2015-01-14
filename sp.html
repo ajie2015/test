@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body>
-
 <div id="test"></div>
 <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
 <script>
 if(typeof(EventSource)!=="undefined"){
-
-	var name = 'FG1509,M1509,RM1509,SR1509,I1505';
+	var name = 'MA1506,M1509,RM1509,SR1509,I1505';
 	var source = new EventSource("get_sina.php?name=" + name);
 	source.onmessage = function(event){
 		var content = event.data;
@@ -25,7 +23,6 @@ if(typeof(EventSource)!=="undefined"){
 
 //创建div
 function append_div( name ){
-	//if($("'#" + name + "'").html()){
 	var obj = $('#' + name );
 	if(obj.length > 0 ) {
 	} else {
