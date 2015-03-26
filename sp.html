@@ -5,7 +5,7 @@
 <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
 <script>
 if(typeof(EventSource)!=="undefined"){
-	var name = 'MA1506,M1509,RM1509,SR1509,I1505';
+	var name = 'RB1510,RB1505,I1509,CF1509,M1509,RM1509,SR1509,AG1506,FG1509,MA1506,TA1509,';
 	var source = new EventSource("get_sina.php?name=" + name);
 	source.onmessage = function(event){
 		var content = event.data;

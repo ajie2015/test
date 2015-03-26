@@ -1,3 +1,17 @@
+SELECT `delivery_id`,`delivery_name`,`delivery_dg_id` FROM `v2_delivery` WHERE 1 order by `delivery_dg_id`
+SELECT `delivery_id`,`delivery_name`,`delivery_dg_id`,`dg_name` FROM `v2_delivery` vd join `v2_delivery_group` vdg on vd.delivery_dg_id=vdg.dg_id WHERE 1 order by `delivery_dg_id`
+
+SELECT `delivery_name`,`delivery_dg_id` FROM `v2_delivery` WHERE 1 order by `delivery_name`
+
+SELECT * FROM `table` WHERE id >= (SELECT id FROM `table` LIMIT 90000, 1) LIMIT 10;
+explain SELECT * FROM `v2_products_test`  WHERE product_id >= (SELECT product_id FROM `v2_products_test` LIMIT 900000, 1)  ORDER BY product_id LIMIT 10;
+
+explain SELECT * FROM `v2_products_test` ORDER BY product_id LIMIT 900000,10;
+
+
+select p.*,pa.*, pi.*,su.su_id,su.su_name,s.user_username as product_sale_name,c.user_username as product_cg_name from v2_products p  force index(product_sku) left join v2_user s on p.product_sale_id=s.user_id left join v2_user c on p.product_cg_id=c.user_id left join v2_supplier su on p.product_supplier=su.su_id left join v2_product_inventory pi on p.product_id=pi.pi_pid left join v2_products_addtion pa on p.product_id=pa.pa_pid where product_is_valid=1 order by `pi_stock_num` desc limit 0,25
+
+
 ≈µ¿º ∫⁄∞µ∆Ô ø°¢÷¬√¸ƒß ı°¢–«º ¥©‘Ω
 ΩÒ√Ù ∫Ï¿±Ω∑
 
@@ -52,6 +66,9 @@ jquery-timepicker-addon  ±∑÷√Î≤Âº˛
 
 2014-12-02
 2014-12-05
+
+
+
 https://medialoot.com/
 http://www.oschina.net/code/snippet_230665_21329
 html5
